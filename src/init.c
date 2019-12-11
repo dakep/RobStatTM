@@ -33,16 +33,6 @@ static R_NativePrimitiveArgType R_calc_fitted_t[] = {
     INTSXP, INTSXP
 };
 
-static R_NativePrimitiveArgType R_lmrob_M_S_t[] = {
-    REALSXP, REALSXP, REALSXP, REALSXP,
-    INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
-    REALSXP, REALSXP, REALSXP,
-    REALSXP, INTSXP, REALSXP,
-    INTSXP, INTSXP, REALSXP, REALSXP,
-    LGLSXP, INTSXP,
-    LGLSXP, LGLSXP, LGLSXP, INTSXP, INTSXP
-};
-
 static R_NativePrimitiveArgType R_subsample_t[] = {
     REALSXP, REALSXP, INTSXP, INTSXP,
     REALSXP, INTSXP, INTSXP, INTSXP,
@@ -53,19 +43,11 @@ static R_NativePrimitiveArgType R_subsample_t[] = {
 };
 
 
-static R_NativePrimitiveArgType r_fast_mve_t[] = {
-  REALSXP, INTSXP, INTSXP, INTSXP, 
-  INTSXP, REALSXP, REALSXP, REALSXP, 
-  INTSXP, INTSXP, INTSXP
-};
-
 static const R_CMethodDef CEntries[]  = {
-    CDEF(r_fast_mve),
     CDEF(R_lmrob_S),
     CDEF(R_lmrob_MM),
     CDEF(R_find_D_scale),
     CDEF(R_calc_fitted),
-    CDEF(R_lmrob_M_S),
     CDEF(R_subsample),
     {NULL, NULL, 0}
 };
@@ -81,15 +63,9 @@ static const R_CallMethodDef CallEntries[] = {
 };
 
 
-static const R_FortranMethodDef FortEntries[] = {
-    {"rslarsbi",  (DL_FUNC) &F77_SUB(rllarsbi), 18},
-    {"dqrdc2", (DL_FUNC) &F77_SUB(dqrdc2), 9},
-    {NULL, NULL, 0}
-};
 
-
-void R_init_RobStatTM(DllInfo *dll)
+void R_init_RobStatTMTiny(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
-    R_useDynamicSymbols(dll, FALSE); 
+    R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
